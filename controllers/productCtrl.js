@@ -228,6 +228,33 @@ const productCtrl = {
       return res.status(500).json({ msg: err.message });
     }
   },
+  reviews: async (req, res) => {
+    try {
+      const { rating } = req.body;
+
+      if (rating && rating !== 0) {
+        const product = await Products.findById(req.params.id);
+        console.log(product);
+        if (!product) {
+          return res.status(400).json({ msg: "Product does not exist." });
+        }
+
+        let num = product.numReviews;
+        let rate = product.rating;
+
+        await Products.findByIdAndUpdate(
+          { _id: req.params.id },
+          {
+            rating: rate + rating,
+            numReviews: num + 1,
+          }
+        );
+        res.json({ msg: "Update Success" });
+      }
+    } catch (err) {
+      return res.status(500).json({ msg: err.message });
+    }
+  },
 };
 
 module.exports = productCtrl;

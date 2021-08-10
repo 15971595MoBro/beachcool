@@ -1,6 +1,7 @@
 const ManualPayments = require("../models/manualPaymentModel");
 const Users = require("../models/userModel");
 const Products = require("../models/productModel");
+const NotificatiomMail = require("./notificationMail");
 const manualpaymentCtrl = {
   getManualPayments: async (req, res) => {
     try {
@@ -61,6 +62,7 @@ const manualpaymentCtrl = {
       const { cart, streetaddress, city, phone, buildingnumber, floor, flat } =
         req.body;
       const { _id, name, email } = user;
+
       const newManualPayment = new ManualPayments({
         user_id: _id,
         name,
@@ -76,6 +78,10 @@ const manualpaymentCtrl = {
       cart.filter((item) => {
         return sold(item._id, item.quantity, item.sold, item.stock);
       });
+
+      console.log(cart);
+
+      NotificatiomMail(email, cart, "I Need Some Product");
 
       await newManualPayment.save();
       res.json({ msg: "Payment Success" });

@@ -13,6 +13,8 @@ router
   .put(productCtrl.updateProduct)
   .delete(productCtrl.deleteProduct);
 
+router.patch("/detail/:id", productCtrl.reviews);
+
 router.route("/productred").get(productCtrl.getProductsRed);
 
 router.route("/productblue").get(productCtrl.getProductsBlue);
