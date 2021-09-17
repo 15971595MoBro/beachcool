@@ -51,7 +51,7 @@ app.get("/", (req, res, next) => {
   res.send({ msg: "Wellcom To HA JNb JSBv" });
 });
 
-const PORT = process.env.PORT || 5000;
+const PORT = process.env.PORT || 80;
 app.listen(PORT, () => {
   console.log(`Server is Running On Port ${PORT}`);
 });
